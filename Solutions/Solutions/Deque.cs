@@ -6,15 +6,25 @@ using System.Threading.Tasks;
 
 namespace Solutions
 {
-    public class Queue<T>
+    public class Deque<T>
     {
         private List<T> list;
-        public Queue()
+
+        public Deque() => list = new List<T>();
+
+        public void AddRight(T p) => list.Add(p);
+        public void AddLeft(T p) => list.Insert(0, p);
+        public T PopRight()
         {
-            list = new List<T>();
+            if (!IsEmpty())
+            {
+                T temp = list[Size() - 1];
+                list.RemoveAt(Size() - 1);
+                return temp;
+            }
+            throw new IndexOutOfRangeException();
         }
-        public void Enqueue(T item) => list.Add(item);
-        public T Dequeue()
+        public T PopLeft()
         {
             if (!IsEmpty())
             {

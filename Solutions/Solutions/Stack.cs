@@ -17,7 +17,7 @@ namespace AlgorithmExamples.Solutions
         public Stack() => list = new List<T>();
         public T Pop()
         {
-            if (list.Count != 0)
+            if (!IsEmpty())
             {
                 T temp = list[list.Count - 1];
                 list.RemoveAt(list.Count - 1);
