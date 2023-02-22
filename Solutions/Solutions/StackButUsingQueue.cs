@@ -4,55 +4,46 @@ using System.Collections.Generic;
 
 namespace Solutions
 {
-    public class MyStack
+    public class MyStack<T>
     {
-        System.Collections.Generic.Queue<int> q;
-        System.Collections.Generic.Queue<int> tempQ;
+        System.Collections.Generic.Queue<T> q;
+        System.Collections.Generic.Queue<T> tempQ;
         public MyStack()
         {
-            q = new System.Collections.Generic.Queue<int>();
-            tempQ = new System.Collections.Generic.Queue<int>();
+            q = new System.Collections.Generic.Queue<T>();
+            tempQ = new System.Collections.Generic.Queue<T>();
         }
 
-        public void Push(int x)
+        public void Push(T x)
         {
             q.Enqueue(x);
         }
 
-        public int Pop()
+        public T Pop()
         {
             int lenght = q.Count;
-            for (int i = 0; i < lenght; i++)
-            {
-                if (i == lenght - 1) //if it's last item
-                {
-                    int tempItem = q.Dequeue();
-                    q = tempQ;
-                    tempQ = new();
-                    return tempItem;
-                }
+            for (int i = 0; i < lenght - 1; i++)
                 tempQ.Enqueue(q.Dequeue());
-            }
-            throw new IndexOutOfRangeException();
+            T temp = q.Dequeue();
+            q = tempQ;
+            return temp;
         }
 
-        public int Top()
+        public T Top()
         {
             int lenght = q.Count;
-            for (int i = 0; i < lenght; i++)
+            if (lenght != 0)
             {
-                if (i == lenght - 1) //if it's last item
-                {
-                    int tempItem = q.Dequeue();
-                    tempQ.Enqueue(tempItem);
-                    q = tempQ;
-                    tempQ = new();
-                    return tempItem;
-                }
-                tempQ.Enqueue(q.Dequeue());
+                for (int i = 0; i < lenght - 1; i++)
+                    tempQ.Enqueue(q.Dequeue());
+                T temp = q.Dequeue();
+                tempQ.Enqueue(temp);
+                q = tempQ;
+                tempQ = new();
+                return temp;
             }
-            throw new IndexOutOfRangeException();
-
+            else
+                throw new IndexOutOfRangeException();
         }
 
         public bool Empty() => q.Count == 0;
