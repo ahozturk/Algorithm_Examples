@@ -13,6 +13,9 @@ namespace Solutions
         {
             list = new List<T>();
         }
+
+        public List<T> GetAll()
+            => list;
         public void Enqueue(T item) => list.Add(item);
         public T Dequeue()
         {
